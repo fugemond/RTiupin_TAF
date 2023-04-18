@@ -1,8 +1,8 @@
 stages:
   - build
 
-maven:
-  -latest
+.build-image:
+  image: markhobson/maven-chrome:jdk-20
 
 Build:
   stage: build
