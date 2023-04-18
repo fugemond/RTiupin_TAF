@@ -2,7 +2,7 @@ stages:
   - build
 
 .build-image:
-  image: markhobson/maven-chrome:jdk-20
+  image: markhobson/maven-chrome:jdk-16
 
 Build:
   stage: build
