@@ -2,15 +2,34 @@ package core;
 
 import com.codeborne.selenide.WebDriverRunner;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
+import static com.codeborne.selenide.Browsers.CHROME;
+import static com.codeborne.selenide.Browsers.FIREFOX;
+import static com.codeborne.selenide.Configuration.browser;
+import static com.codeborne.selenide.Configuration.browserVersion;
 import static core.TestScenario.getTestScenario;
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.parseBoolean;
+import static utility.PropertiesLoader.tryGetPropertyOrDefault;
 
 public class TestSetup {
 
+    private final DesiredCapabilities capabilities = new DesiredCapabilities();
+
+
+    private final static String DEFAULT_BROWSER_WIDTH = "1920";
+    private final static String DEFAULT_BROWSER_HEIGHT = "1080";
+
+    private final static String WIDTH = tryGetPropertyOrDefault("browserWidth", DEFAULT_BROWSER_WIDTH);
+    private final static String HEIGHT = tryGetPropertyOrDefault("browserHeight", DEFAULT_BROWSER_HEIGHT);
     protected final static String REGRESSION = "regression";
     protected final static String SMOKE = "smoke";
     protected final static String LOGIN = "login";
@@ -19,14 +38,19 @@ public class TestSetup {
 
     @BeforeMethod(alwaysRun = true)
     public void setup() {
-        WebDriverManager.chromedriver().setup();
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--no-sandbox");
-        chromeOptions.addArguments("--headless"); // should be enabled for run with CI
-        chromeOptions.addArguments("--disable-dev-shm-usage");
-        chromeOptions.addArguments("--window-size=1920x1080");
-        chromeOptions.addArguments("--remote-allow-origins=*");
-        WebDriverRunner.setWebDriver(new ChromeDriver(chromeOptions));
+
+        browser = tryGetPropertyOrDefault("browser", "chrome");
+        browserVersion = tryGetPropertyOrDefault("browserVersion", "");
+
+        switch (browser) {
+            case CHROME: {
+                WebDriverRunner.setWebDriver(createLocalChromeDriver(capabilities));
+                break;
+            }
+            case FIREFOX: {
+                WebDriverRunner.setWebDriver(createLocalFirefoxDriver(capabilities));
+            }
+        }
         getTestScenario().setEnvironment(new EnvContainer());
     }
 
@@ -34,5 +58,27 @@ public class TestSetup {
     public void tearDown() {
         WebDriverRunner.getWebDriver().quit();
         getTestScenario().removeEnvironment();
+    }
+
+    private WebDriver createLocalChromeDriver(DesiredCapabilities capabilities) {
+        WebDriverManager.chromedriver().setup();
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("--remote-allow-origins=*");
+        chromeOptions.addArguments("--window-size=" + WIDTH + "," + HEIGHT);
+        if (parseBoolean(tryGetPropertyOrDefault("headlessRun", FALSE.toString()))) {
+            chromeOptions.setHeadless(true);
+        }
+        chromeOptions.merge(capabilities);
+        return new ChromeDriver(chromeOptions);
+    }
+
+    private WebDriver createLocalFirefoxDriver(DesiredCapabilities capabilities) {
+        WebDriverManager.firefoxdriver().setup();
+        FirefoxOptions firefoxOptions = new FirefoxOptions();
+        if (parseBoolean(tryGetPropertyOrDefault("headless", FALSE.toString()))) {
+            firefoxOptions.setHeadless(true);
+        }
+        firefoxOptions.merge(capabilities);
+        return new FirefoxDriver(firefoxOptions);
     }
 }

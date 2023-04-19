@@ -55,6 +55,23 @@ public class PropertiesLoader {
         }
         return requireNonNullElse(applicationProperty,propertyName);
     }
+
+    @SneakyThrows
+    public static String tryGetPropertyOrDefault(String propertyName,String valueToReturn) {
+        if (Strings.isNullOrEmpty(propertyName)) {
+            throw new IllegalArgumentException("Provided property should not be Empty or Null");
+        }
+
+        String systemProperty = System.getProperty(propertyName);
+        String applicationProperty = PROPERTIES.getProperty(propertyName);
+
+        if (systemProperty != null) {
+            return systemProperty;
+        }
+        return requireNonNullElse(applicationProperty,valueToReturn);
+    }
+
+
     public static String loadSystemPropertyOrDefault(String propertyName, String defaultValue) {
         String propValue = System.getProperty(propertyName);
         return propValue != null ? propValue : defaultValue;
