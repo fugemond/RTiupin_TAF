@@ -20,6 +20,8 @@ import static java.lang.String.format;
 import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
+import static org.openqa.selenium.By.cssSelector;
+import static org.openqa.selenium.By.xpath;
 
 
 /**
@@ -94,7 +96,17 @@ public abstract class BasePage extends ElementsContainer {
         } else {
             return $(By.cssSelector(format(field.getAnnotation(FindBy.class).css(), param)));
         }
+    }
 
+    public SelenideElement getElementByPartValue(String elementName, String elementSelectorPart) {
+        Field field = Arrays.stream(getClass().getDeclaredFields())
+                .filter(f -> f.getDeclaredAnnotation(Name.class).value().equals(elementName)).findFirst().orElseThrow(() -> new AssertionError(
+                        format("Element with name [%s] is not declared on page", elementName)));
+        if (field.getAnnotation(FindBy.class).css().isEmpty()) {
+            return $(xpath(format(field.getAnnotation(FindBy.class).xpath(), elementSelectorPart)));
+        } else {
+            return $(cssSelector(format(field.getAnnotation(FindBy.class).css(), elementSelectorPart)));
+        }
     }
 
     private static SelenideElement castToSelenideElement(Object object) {

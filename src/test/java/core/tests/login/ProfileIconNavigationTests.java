@@ -1,4 +1,4 @@
-package core.tests.launches;
+package core.tests.login;
 
 import core.TestSetup;
 import io.qameta.allure.Description;
@@ -15,7 +15,7 @@ import static steps.ui.StepsUI.*;
 @Log4j2
 public class ProfileIconNavigationTests extends TestSetup {
 
-    @Test(groups = {REGRESSION, LAUNCHES})
+    @Test(groups = {REGRESSION_SUITE, LAUNCHES_SUITE})
     @Story("TAF-02")
     @Description("Test ability to open Launches page for logged user")
     public void userAbleToOpenProfilePage() {

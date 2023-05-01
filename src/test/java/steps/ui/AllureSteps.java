@@ -2,8 +2,12 @@ package steps.ui;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import core.interfaces.PageElement;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
+import site.pages.PagesNaming;
+
+import java.util.List;
 
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static core.TestScenario.getTestScenario;
@@ -84,5 +88,12 @@ public class AllureSteps {
         String currentUrl = getWebDriver().getCurrentUrl();
         log.info("Verify that current url :\"{}\" is equal to: \"{}\"", currentUrl, url);
         assertThat("Current URL is not equal to expected", currentUrl, equalTo(url));
+    }
+
+    @Step("Element from list: {0}, with ID: {1}, should contains value: {2}")
+    public static void assertThatElementByPartContainsValue(String pageElement, String elementLocatorPart, String expectedValue) {
+        SelenideElement element = getTestScenario().getCurrentPage().getElementByPartValue(pageElement,elementLocatorPart);
+        log.info("Verify that element \"{}\" contains value: \"{}\" is \"{}\" ",pageElement, element.getText(), expectedValue);
+        assertThat("Element doesn't contain value", element.getText(), containsString(expectedValue));
     }
 }

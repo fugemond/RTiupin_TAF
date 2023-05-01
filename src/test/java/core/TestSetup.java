@@ -30,10 +30,10 @@ public class TestSetup {
 
     private final static String WIDTH = tryGetPropertyOrDefault("browserWidth", DEFAULT_BROWSER_WIDTH);
     private final static String HEIGHT = tryGetPropertyOrDefault("browserHeight", DEFAULT_BROWSER_HEIGHT);
-    protected final static String REGRESSION = "regression";
+    protected final static String REGRESSION_SUITE = "regression";
     protected final static String SMOKE = "smoke";
     protected final static String LOGIN = "login";
-    protected final static String LAUNCHES = "launches";
+    protected final static String LAUNCHES_SUITE = "launches";
     protected final static String BUG = "bug";
 
     @BeforeMethod(alwaysRun = true)
