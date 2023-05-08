@@ -1,6 +1,6 @@
 package core.tests.login;
 
-import core.TestSetup;
+import steps.ui.TestSetup;
 import io.qameta.allure.Description;
 import io.qameta.allure.Story;
 import lombok.extern.log4j.Log4j2;
@@ -19,13 +19,13 @@ public class ProfileIconNavigationTests extends TestSetup {
     @Story("TAF-02")
     @Description("Test ability to open Launches page for logged user")
     public void userAbleToOpenProfilePage() {
-        OPEN_PAGE_BY_LINK(LOGIN_PAGE, "baseUrl");
-        PAGE_IS_OPENED(LOGIN_PAGE);
-        ENTER_ENCRYPTED_VALUE_INTO_FIELD(LOGIN_FILED, "rpLogin");
-        ENTER_ENCRYPTED_VALUE_INTO_FIELD(PASSWORD_FIELD, "rpPassword");
-        CLICK_ON_ELEMENT(SIGN_IN_BUTTON);
-        PAGE_IS_OPENED(COMMON_PANEL_BLOCK);
+        OPEN_PAGE_BY_LINK(LOGIN_PAGE.getPageName(), "baseUrl");
+        PAGE_IS_OPENED(LOGIN_PAGE.getPageName());
+        ENTER_ENCRYPTED_VALUE_INTO_FIELD(LOGIN_FILED.getElementName(), "rpLogin");
+        ENTER_ENCRYPTED_VALUE_INTO_FIELD(PASSWORD_FIELD.getElementName(), "rpPassword");
+        CLICK_ON_ELEMENT(SIGN_IN_BUTTON.getElementName());
+        PAGE_IS_OPENED(COMMON_PANEL_BLOCK.getPageName());
         PAGE_IS_LOADED();
-        CLICK_ON_ELEMENT(LAUNCHES_TAB);
+        CLICK_ON_ELEMENT(LAUNCHES_TAB.getElementName());
     }
 }

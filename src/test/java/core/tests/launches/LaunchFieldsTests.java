@@ -1,11 +1,10 @@
 package core.tests.launches;
 
-import core.TestSetup;
+import steps.ui.TestSetup;
 import core.data.DataProviders;
 import io.qameta.allure.Description;
 import io.qameta.allure.Story;
 import lombok.extern.log4j.Log4j2;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static site.pages.LaunchesPage.LaunchPageElements.*;
@@ -25,16 +24,16 @@ public class LaunchFieldsTests extends TestSetup {
     @Story("TAF-01")
     @Description("Check launch owner name")
     public void launchesNamesTest(String launchNumber, String launchName) {
-        OPEN_PAGE_BY_LINK(LOGIN_PAGE, "baseUrl");
-        PAGE_IS_OPENED(LOGIN_PAGE);
-        ENTER_ENCRYPTED_VALUE_INTO_FIELD(LOGIN_FILED, "rpLogin");
-        ENTER_ENCRYPTED_VALUE_INTO_FIELD(PASSWORD_FIELD, "rpPassword");
-        CLICK_ON_ELEMENT(SIGN_IN_BUTTON);
-        PAGE_IS_OPENED(COMMON_PANEL_BLOCK);
+        OPEN_PAGE_BY_LINK(LOGIN_PAGE.getPageName(), "baseUrl");
+        PAGE_IS_OPENED(LOGIN_PAGE.getPageName());
+        ENTER_ENCRYPTED_VALUE_INTO_FIELD(LOGIN_FILED.getElementName(), "rpLogin");
+        ENTER_ENCRYPTED_VALUE_INTO_FIELD(PASSWORD_FIELD.getElementName(), "rpPassword");
+        CLICK_ON_ELEMENT(SIGN_IN_BUTTON.getElementName());
+        PAGE_IS_OPENED(COMMON_PANEL_BLOCK.getPageName());
         PAGE_IS_LOADED();
-        CLICK_ON_ELEMENT(LAUNCHES_TAB);
-        PAGE_IS_OPENED(LAUNCHES_PAGE);
-        ASSERT_THAT_ELEMENT_BY_PART_CONTAINS_VALUE(LAUNCH_NAME, launchNumber, launchName);
+        CLICK_ON_ELEMENT(LAUNCHES_TAB.getElementName());
+        PAGE_IS_OPENED(LAUNCHES_PAGE.getPageName());
+        ASSERT_THAT_ELEMENT_BY_PART_CONTAINS_VALUE(LAUNCH_NAME.getElementName(), launchNumber, launchName);
     }
 
     @Test(groups = {REGRESSION_SUITE, LAUNCHES_SUITE},
@@ -43,16 +42,16 @@ public class LaunchFieldsTests extends TestSetup {
     @Story("TAF-01")
     @Description("Check launch total tests run")
     public void launchesTotalRunTest(String launchNumber, String totalTestsRun) {
-        OPEN_PAGE_BY_LINK(LOGIN_PAGE, "baseUrl");
-        PAGE_IS_OPENED(LOGIN_PAGE);
-        ENTER_ENCRYPTED_VALUE_INTO_FIELD(LOGIN_FILED, "rpLogin");
-        ENTER_ENCRYPTED_VALUE_INTO_FIELD(PASSWORD_FIELD, "rpPassword");
-        CLICK_ON_ELEMENT(SIGN_IN_BUTTON);
-        PAGE_IS_OPENED(COMMON_PANEL_BLOCK);
+        OPEN_PAGE_BY_LINK(LOGIN_PAGE.getPageName(), "baseUrl");
+        PAGE_IS_OPENED(LOGIN_PAGE.getPageName());
+        ENTER_ENCRYPTED_VALUE_INTO_FIELD(LOGIN_FILED.getElementName(), "rpLogin");
+        ENTER_ENCRYPTED_VALUE_INTO_FIELD(PASSWORD_FIELD.getElementName(), "rpPassword");
+        CLICK_ON_ELEMENT(SIGN_IN_BUTTON.getElementName());
+        PAGE_IS_OPENED(COMMON_PANEL_BLOCK.getPageName());
         PAGE_IS_LOADED();
-        CLICK_ON_ELEMENT(LAUNCHES_TAB);
-        PAGE_IS_OPENED(LAUNCHES_PAGE);
-        ASSERT_THAT_ELEMENT_BY_PART_CONTAINS_VALUE(LAUNCH_TOTAL, launchNumber, totalTestsRun);
+        CLICK_ON_ELEMENT(LAUNCHES_TAB.getElementName());
+        PAGE_IS_OPENED(LAUNCHES_PAGE.getPageName());
+        ASSERT_THAT_ELEMENT_BY_PART_CONTAINS_VALUE(LAUNCH_TOTAL.getElementName(), launchNumber, totalTestsRun);
     }
 
     @Test(groups = {REGRESSION_SUITE, LAUNCHES_SUITE},
@@ -61,15 +60,15 @@ public class LaunchFieldsTests extends TestSetup {
     @Story("TAF-01")
     @Description("Check launch passed tests run")
     public void launchesPassedRunTest(String launchNumber, String totalTestsRun) {
-        OPEN_PAGE_BY_LINK(LOGIN_PAGE, "baseUrl");
-        PAGE_IS_OPENED(LOGIN_PAGE);
-        ENTER_ENCRYPTED_VALUE_INTO_FIELD(LOGIN_FILED, "rpLogin");
-        ENTER_ENCRYPTED_VALUE_INTO_FIELD(PASSWORD_FIELD, "rpPassword");
-        CLICK_ON_ELEMENT(SIGN_IN_BUTTON);
-        PAGE_IS_OPENED(COMMON_PANEL_BLOCK);
+        OPEN_PAGE_BY_LINK(LOGIN_PAGE.getPageName(), "baseUrl");
+        PAGE_IS_OPENED(LOGIN_PAGE.getPageName());
+        ENTER_ENCRYPTED_VALUE_INTO_FIELD(LOGIN_FILED.getElementName(), "rpLogin");
+        ENTER_ENCRYPTED_VALUE_INTO_FIELD(PASSWORD_FIELD.getElementName(), "rpPassword");
+        CLICK_ON_ELEMENT(SIGN_IN_BUTTON.getElementName());
+        PAGE_IS_OPENED(COMMON_PANEL_BLOCK.getPageName());
         PAGE_IS_LOADED();
-        CLICK_ON_ELEMENT(LAUNCHES_TAB);
-        PAGE_IS_OPENED(LAUNCHES_PAGE);
-        ASSERT_THAT_ELEMENT_BY_PART_CONTAINS_VALUE(LAUNCH_PASSED, launchNumber, totalTestsRun);
+        CLICK_ON_ELEMENT(LAUNCHES_TAB.getElementName());
+        PAGE_IS_OPENED(LAUNCHES_PAGE.getPageName());
+        ASSERT_THAT_ELEMENT_BY_PART_CONTAINS_VALUE(LAUNCH_PASSED.getElementName(), launchNumber, totalTestsRun);
     }
 }

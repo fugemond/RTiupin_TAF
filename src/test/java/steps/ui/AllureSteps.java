@@ -2,12 +2,9 @@ package steps.ui;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import core.interfaces.PageElement;
+import io.cucumber.java.en.And;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
-import site.pages.PagesNaming;
-
-import java.util.List;
 
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static core.TestScenario.getTestScenario;
@@ -75,7 +72,6 @@ public class AllureSteps {
         log.info("Verify that element: \"{}\" is \"{}\" ", pageElement, condition.getName());
         element.shouldBe(condition);
     }
-
     @Step("Element: {0}, should contains value: {1}")
     public static void assertThatElementContainsValue(String pageElement, String text) {
         SelenideElement element = getTestScenario().getCurrentPage().getElement(pageElement);

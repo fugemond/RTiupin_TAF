@@ -2,6 +2,7 @@ package steps.ui;
 
 import com.codeborne.selenide.Condition;
 import core.interfaces.PageElement;
+import io.cucumber.java.en.And;
 import lombok.extern.log4j.Log4j2;
 import site.pages.PagesNaming;
 
@@ -22,7 +23,8 @@ public class AssertionSteps {
         assertThatCurrentUrlIs(url);
     }
 
-    public static void ASSERT_THAT_ELEMENT_BY_PART_CONTAINS_VALUE(PageElement pageElementName, String elementLocatorPart, String expectedValue){
-        assertThatElementByPartContainsValue(pageElementName.getElementName(),elementLocatorPart,expectedValue);
+    @And("Assert that element {string} by part {string} contains value {string}")
+    public static void ASSERT_THAT_ELEMENT_BY_PART_CONTAINS_VALUE(String pageElementName, String elementLocatorPart, String expectedValue){
+        assertThatElementByPartContainsValue(pageElementName,elementLocatorPart,expectedValue);
     }
 }

@@ -1,6 +1,9 @@
-package core;
+package steps.ui;
 
 import com.codeborne.selenide.WebDriverRunner;
+import core.EnvContainer;
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -36,7 +39,8 @@ public class TestSetup {
     protected final static String LAUNCHES_SUITE = "launches";
     protected final static String BUG = "bug";
 
-    @BeforeMethod(alwaysRun = true)
+    //@BeforeMethod(alwaysRun = true)
+    @Before
     public void setup() {
 
         browser = tryGetPropertyOrDefault("browser", "chrome");
@@ -54,7 +58,8 @@ public class TestSetup {
         getTestScenario().setEnvironment(new EnvContainer());
     }
 
-    @AfterMethod(alwaysRun = true)
+    //@AfterMethod(alwaysRun = true)
+    @After
     public void tearDown() {
         WebDriverRunner.getWebDriver().quit();
         getTestScenario().removeEnvironment();
