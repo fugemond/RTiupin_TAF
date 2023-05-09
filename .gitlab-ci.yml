@@ -1,0 +1,12 @@
+stages:
+  - build
+
+.build-image:
+  image: markhobson/maven-chrome:jdk-16
+
+Build:
+  stage: build
+  extends:
+    - .build-image
+  script:
+    - mvn clean install
